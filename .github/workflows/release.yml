@@ -118,6 +118,11 @@ jobs:
           path: build/android/TCsOffice/.buildozer
           key: buildozer-${{ steps.qt.outputs.pyside }}-${{ hashFiles('packaging/android/build_apk.py') }}
       - name: Build the APK
+        env:
+          # python-for-android's lxml recipe is still 4.8.0, whose C code does not
+          # compile against the Python 3.14 it builds for Android. Its recipes
+          # honour VERSION_<name>, so use an lxml whose sdist supports 3.14.
+          VERSION_lxml: "6.0.2"
         run: |
           # Qt names the files pyside6-...whl in lower case, so match either case.
           shopt -s nocaseglob
