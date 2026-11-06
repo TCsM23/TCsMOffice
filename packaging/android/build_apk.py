@@ -85,6 +85,8 @@ def main():
     ap.add_argument("--ndk-path", type=Path)
     ap.add_argument("--sdk-path", type=Path)
     args = ap.parse_args()
+    # Resolve before chdir(STAGE) below, or relative paths point into the stage folder.
+    args.wheel_pyside, args.wheel_shiboken = args.wheel_pyside.resolve(), args.wheel_shiboken.resolve()
     for wheel in (args.wheel_pyside, args.wheel_shiboken):
         if not wheel.is_file():
             sys.exit(f"Wheel not found: {wheel} (did the shell glob match nothing?)")
@@ -99,8 +101,8 @@ def main():
     import android_deploy
     android_deploy.main(
         name="TCsOffice",
-        pyside_wheel=args.wheel_pyside.resolve(),
-        shiboken_wheel=args.wheel_shiboken.resolve(),
+        pyside_wheel=args.wheel_pyside,
+        shiboken_wheel=args.wheel_shiboken,
         ndk_path=args.ndk_path.resolve() if args.ndk_path else None,
         sdk_path=args.sdk_path.resolve() if args.sdk_path else None,
         force=True,
