@@ -78,7 +78,7 @@ jobs:
       - run: sed -i 's/^__version__ = .*/__version__ = "${{ needs.version.outputs.version }}"/' office/version.py
       - run: pip install -r requirements.txt pyinstaller
       - run: pyinstaller packaging/tcsoffice.spec --noconfirm
-      - run: packaging/linux/build_appimage.sh ${{ needs.version.outputs.version }}
+      - run: bash packaging/linux/build_appimage.sh ${{ needs.version.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
           name: linux
@@ -119,8 +119,10 @@ jobs:
           key: buildozer-${{ steps.qt.outputs.pyside }}-${{ hashFiles('packaging/android/build_apk.py') }}
       - name: Build the APK
         run: |
+          # Qt names the files pyside6-...whl in lower case, so match either case.
+          shopt -s nocaseglob
           python packaging/android/build_apk.py --version ${{ needs.version.outputs.version }} \
-            --wheel-pyside build/wheels/PySide6-*.whl --wheel-shiboken build/wheels/shiboken6-*.whl
+            --wheel-pyside build/wheels/pyside6-*android_aarch64.whl --wheel-shiboken build/wheels/shiboken6-*android_aarch64.whl
       - name: Sign with the TCsOffice key (keeps updates installable over each other)
         env:
           KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}

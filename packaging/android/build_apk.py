@@ -85,6 +85,9 @@ def main():
     ap.add_argument("--ndk-path", type=Path)
     ap.add_argument("--sdk-path", type=Path)
     args = ap.parse_args()
+    for wheel in (args.wheel_pyside, args.wheel_shiboken):
+        if not wheel.is_file():
+            sys.exit(f"Wheel not found: {wheel} (did the shell glob match nothing?)")
 
     nums = [int(n) for n in args.version.split(".")] + [0, 0, 0]
     numeric = nums[0] * 1_000_000 + nums[1] * 10_000 + nums[2]  # 1.0.17 -> 1000017
