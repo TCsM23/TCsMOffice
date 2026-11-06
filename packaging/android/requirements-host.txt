@@ -1,0 +1,7 @@
+# Host-side helpers for pyside6-android-deploy. PySide6 itself is pinned by the
+# workflow to the version of Qt's Android wheels; the tool installs its own
+# buildozer and Cython.
+jinja2
+pkginfo
+tqdm
+packaging

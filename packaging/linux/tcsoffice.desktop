@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=TCsOffice
+Comment=Sheets, Writer and Slides in crimson and gilt
+Exec=TCsOffice %F
+Icon=tcsoffice
+Categories=Office;WordProcessor;Spreadsheet;Presentation;
+MimeType=application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.openxmlformats-officedocument.presentationml.presentation;
+Terminal=false

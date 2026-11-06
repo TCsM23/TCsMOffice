@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+*.xlsx
+*.docx
+build/
+dist/
+*.spec.bak
+packaging/windows/version_info.txt
